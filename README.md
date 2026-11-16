@@ -52,3 +52,20 @@ python3 build.py --real --out dist-real
 4. Вказати `formEndpoint` — адресу, куди надсилати заявки. Без неї форми чесно повідомляють, що заявку не надіслано, і показують телефон.
 5. Дати текст політики конфіденційності на перевірку юристу.
 6. Поставити `demoMode: false` і зібрати сайт.
+
+## Сайт в інтернеті (GitHub Pages)
+
+- Код: https://github.com/Ievgeniyyyy/laundry-site
+- Сайт: https://ievgeniyyyy.github.io/laundry-site/
+
+GitHub показує вміст папки `docs/`. Щоб оновити сайт в інтернеті після змін:
+
+```bash
+python3 build.py --out docs --base /laundry-site
+```
+
+```bash
+git add -A && git commit -m "Оновлення сайту" && git push
+```
+
+Через 1–2 хвилини зміни зʼявляться за посиланням.
