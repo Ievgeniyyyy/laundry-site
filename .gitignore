@@ -1,0 +1,4 @@
+dist/
+dist-real/
+.DS_Store
+__pycache__/
