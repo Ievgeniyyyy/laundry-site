@@ -283,7 +283,7 @@ def layout(title, desc, path, body, schemas=(), og_img=None, preload=None):
         <span class="cart-count" id="cartCount">0</span>
       </button>
       {header_phone}
-      <a href="/#contacts" class="btn btn--primary btn--sm hide-mobile">{ICON_CHAT}Отримати консультацію</a>
+      <a href="/#contacts" class="btn btn--cta btn--sm hide-mobile">{ICON_CHAT}Отримати консультацію</a>
       <button class="burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -297,7 +297,7 @@ def layout(title, desc, path, body, schemas=(), og_img=None, preload=None):
   <div class="container footer__inner">
     <div><a href="/" class="logo logo--light"><span>{logo_text}</span></a>
       <p>© {year} {e(BRAND)}. Професійне пральне обладнання та витратні матеріали.</p></div>
-    <nav class="footer__nav" aria-label="Меню у підвалі">{"".join(f'<a href="{c["url"]}">{e(c["name"])}</a>' for c in VISIBLE_CATS)}{f'<a href="{CONS_URL}">Витратні матеріали</a>' if CONS_CATS else ""}<a href="/polityka-konfidentsiinosti/">Політика конфіденційності</a></nav>
+    <nav class="footer__nav" aria-label="Меню у підвалі">{"".join(f'<a href="{c["url"]}">{e(c["name"])}</a>' for c in VISIBLE_CATS)}{f'<a href="{CONS_URL}">Витратні матеріали</a>' if CONS_CATS else ""}{'<a href="/slovnyk/">Словник термінів</a>' if S["glossary"] else ""}<a href="/polityka-konfidentsiinosti/">Політика конфіденційності</a></nav>
   </div>
 </footer>
 <aside class="drawer" id="drawer" hidden>
@@ -340,7 +340,7 @@ def home():
     {eyebrow_html}
     <h1>Проєктуємо, комплектуємо й запускаємо професійні пральні під ключ</h1>
     <p class="lead">{e(lead)}</p>
-    <div class="hero__cta"><a href="#contacts" class="btn btn--primary">Замовити проєкт пральні {ARROW}</a><a href="#calc" class="btn btn--outline">{ICON_CALC}Розрахувати пральню</a></div>
+    <div class="hero__cta"><a href="#contacts" class="btn btn--cta">Замовити проєкт {ARROW}</a><a href="#calc" class="btn btn--outline">{ICON_CALC}Розрахувати пральню</a></div>
   </div>
   <div class="hero__visual">
     <img class="showroom" src="/img/hero/showroom-sm.webp" srcset="/img/hero/showroom-sm.webp 800w, /img/hero/showroom.webp 1868w"
@@ -374,7 +374,7 @@ def home():
         ("Заклади харчування", "Прання скатертин, серветок і уніформи персоналу."),
         ("Гуртожитки та житлові комплекси", "Компактні пральні колони для спільних пральних кімнат."),
         ("Медичні та соціальні заклади", "Обладнання для щоденного прання білизни й одягу."),
-        ("Хімчистки та пральні", "Хімія, аксесуари й витратні матеріали для щоденної роботи."),
+        ("Хімчистки та пральні", "Відкриття, модернізація й розширення цеху: обладнання, хімія та витратні матеріали."),
     ]
     sect = "".join(f'<article class="solution"><span class="solution__num">{i + 1:02d}</span><h3>{e(t)}</h3><p>{e(d)}</p></article>'
                    for i, (t, d) in enumerate(sectors))
@@ -426,10 +426,24 @@ def home():
     if S["steps"] or S["features"]:
         steps = "".join(f'<li><span>{i + 1:02d}</span><h3>{e(s["title"])}</h3><p>{e(s["text"])}</p></li>' for i, s in enumerate(S["steps"]))
         feats = "".join(f'<div class="feature"><div class="feature__ico" aria-hidden="true">{e(f["icon"])}</div><h3>{e(f["title"])}</h3><p>{e(f["text"])}</p></div>' for f in S["features"])
+        flow = "".join(f"<li>{e(x)}</li>" for x in ("Приймання", "Плямовиведення", "Прання або чистка", "Сушіння й фініш", "Пакування", "Видача"))
         services = f'''<section class="section section--alt" id="services"><div class="container">
-  <div class="section__head"><p class="eyebrow">Пральня під ключ</p><h2>Від ідеї до запуску пральні</h2><p>Не лише продаємо обладнання: проєктуємо, комплектуємо, монтуємо й запускаємо.</p></div>
-  {f'<ol class="steps">{steps}</ol>' if steps else ""}{f'<div class="features">{feats}</div>' if feats else ""}
+  <div class="section__head"><p class="eyebrow">Під ключ</p><h2>Від ідеї до робочого цеху</h2><p>Ми не просто постачаємо машини — ми проєктуємо робочий цех пральні чи хімчистки.</p></div>
+  {f'<ol class="steps">{steps}</ol>' if steps else ""}
+  <div class="flow"><h3>Технологічний потік цеху</h3>
+    <p class="muted">Обладнання підбираємо під кожен етап, щоб вироби рухалися цехом без зайвих переміщень.</p>
+    <ol class="flow__list">{flow}</ol></div>
+  {f'<h3 class="features__title">Наші принципи</h3><div class="features">{feats}</div>' if feats else ""}
 </div></section>'''
+
+    packages = ""
+    if S["packages"]:
+        pk = "".join(f'''<article class="pack"><span class="pack__num">{i + 1:02d}</span><h3>{e(x["name"])}</h3><p class="pack__for">{e(x["for"])}</p>
+      <ul class="ticks">{"".join(f"<li>{e(it)}</li>" for it in x["items"])}</ul>
+      <a class="btn btn--outline btn--sm" href="#contacts">Обговорити комплектацію</a></article>''' for i, x in enumerate(S["packages"]))
+        packages = f'''<section class="section" id="packages"><div class="container">
+  <div class="section__head"><p class="eyebrow">Пакети рішень</p><h2>Три рівні комплектації</h2><p>Склад кожного пакета уточнюємо під ваш потік, приміщення й бюджет.</p></div>
+  <div class="packs">{pk}</div></div></section>'''
 
     calc = '''<section class="section" id="calc"><div class="container calc">
   <div class="calc__text">
@@ -504,9 +518,9 @@ def home():
         schemas.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
             {"@type": "Question", "name": f["q"], "acceptedAnswer": {"@type": "Answer", "text": f["a"]}} for f in S["faq"]]})
 
-    body = hero + trust + categories + services + solutions + spotlight + catalog + brands + calc + reviews + faq + about + contacts
-    title = f"{BRAND} — професійне пральне обладнання та витратні матеріали"
-    desc = "Пральні й сушильні машини, пральні колони та машини Combo для пралень самообслуговування, готелів і закладів. Хімія, аксесуари й витратні матеріали для пралень і хімчисток."
+    body = hero + trust + categories + services + packages + solutions + spotlight + catalog + brands + calc + reviews + faq + about + contacts
+    title = f"{BRAND} — обладнання для пралень і хімчисток під ключ"
+    desc = "Проєктуємо, комплектуємо й запускаємо пральні та хімчистки: підбір обладнання, поставка, монтаж, навчання персоналу й супровід. Пральні й сушильні машини, пральні колони, машини Combo."
     write("/", layout(title, desc, "/", body, schemas, preload='<link rel="preload" as="image" imagesrcset="/img/hero/showroom-sm.webp 800w, /img/hero/showroom.webp 1868w" imagesizes="(max-width: 860px) 100vw, 62vw" fetchpriority="high">'))
 
 
@@ -553,6 +567,22 @@ def consumables_page():
                {"@context": "https://schema.org", "@type": "ItemList", "name": "Витратні матеріали", "itemListElement": [
                    {"@type": "ListItem", "position": i + 1, "name": p["name"], "url": absu(p["url"])} for i, p in enumerate(items)]}]
     write(CONS_URL, layout(f"Витратні матеріали для пралень і хімчисток — {BRAND}", intro, CONS_URL, body, schemas))
+
+
+def glossary_page():
+    cr = [("Головна", "/"), ("Словник термінів", None)]
+    intro = "Короткі пояснення термінів, які трапляються під час вибору обладнання для пралень і хімчисток."
+    rows = "".join(f'<div class="gloss__row"><dt>{e(g["term"])}</dt><dd>{e(g["text"])}</dd></div>' for g in S["glossary"])
+    body = f'''<section class="section section--page"><div class="container">
+  {crumbs(cr)}
+  <div class="section__head"><h1 class="h-page">Словник термінів</h1><p>{e(intro)}</p></div>
+  <dl class="gloss">{rows}</dl>
+  <div class="page-cta"><p>Не впевнені, яка технологія підійде вашому цеху? Пояснимо різницю й допоможемо обрати.</p><a class="btn btn--primary" href="/#contacts">Отримати консультацію</a></div>
+</div></section>'''
+    schemas = [crumbs_schema(cr, "/slovnyk/"),
+               {"@context": "https://schema.org", "@type": "DefinedTermSet", "name": "Словник термінів пралень і хімчисток", "hasDefinedTerm": [
+                   {"@type": "DefinedTerm", "name": g["term"], "description": g["text"]} for g in S["glossary"]]}]
+    write("/slovnyk/", layout(f"Словник термінів пралень і хімчисток — {BRAND}", intro, "/slovnyk/", body, schemas))
 
 
 # ---------- сторінка товару
@@ -642,7 +672,7 @@ def service_files():
 
     bots = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "Google-Extended", "PerplexityBot", "ClaudeBot", "Claude-SearchBot"]
     robots = "User-agent: *\nAllow: /\n\n" + "".join(f"User-agent: {b}\nAllow: /\n\n" for b in bots)
-    pages = ["/"] + ([CONS_URL] if CONS_CATS else []) + [c["url"] for c in VISIBLE_CATS] + [p["url"] for p in PRODUCTS] + ["/polityka-konfidentsiinosti/"]
+    pages = ["/"] + ([CONS_URL] if CONS_CATS else []) + (["/slovnyk/"] if S["glossary"] else []) + [c["url"] for c in VISIBLE_CATS] + [p["url"] for p in PRODUCTS] + ["/polityka-konfidentsiinosti/"]
     if SITE_URL:
         robots += f"Sitemap: {SITE_URL}/sitemap.xml\n"
         sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(
@@ -651,8 +681,9 @@ def service_files():
     write("/robots.txt", robots)
 
     lines = [f"# {BRAND}", "",
-             "> Постачальник професійного прального обладнання в Україні: пральні й сушильні машини, пральні колони, машини Combo, "
-             "а також хімія, аксесуари й витратні матеріали для пралень і хімчисток. Обладнання продається за комерційною пропозицією.", ""]
+             "> Постачальник професійного обладнання для пралень і хімчисток в Україні: проєктуємо, комплектуємо й запускаємо цехи під ключ. "
+             "Пральні й сушильні машини, пральні колони, машини Combo, а також хімія та витратні матеріали. "
+             "Обладнання продається за комерційною пропозицією.", ""]
     if S["manufacturerBrand"]:
         lines += [f"Офіційний дилер бренду {S['manufacturerBrand']}.", ""]
     lines.append("## Каталог")
@@ -662,6 +693,10 @@ def service_files():
             if p["cat"] == c["id"] and not p.get("demo"):
                 spec = "; ".join(f"{k}: {v}" for k, v in p.get("specs", {}).items())
                 lines.append(f"- [{p['name']}]({absu(p['url'])}): {p['desc']}" + (f" ({spec})" if spec else ""))
+    if S["steps"]:
+        lines += ["", "## Послуги"] + [f"- {x['title']}: {x['text']}" for x in S["steps"]]
+    if S["glossary"]:
+        lines += ["", f"## [Словник термінів]({absu('/slovnyk/')})"] + [f"- {g['term']}: {g['text']}" for g in S["glossary"]]
     contact = [x for x in (S["phone"], S["email"], S["address"]) if x]
     if contact and not DEMO:
         lines += ["", "## Контакти", *[f"- {x}" for x in contact]]
@@ -687,10 +722,12 @@ def main():
         product_page(p)
     if CONS_CATS:
         consumables_page()
+    if S["glossary"]:
+        glossary_page()
     privacy_page()
     service_files()
 
-    n_pages = 2 + len(VISIBLE_CATS) + len(PRODUCTS) + (1 if CONS_CATS else 0)
+    n_pages = 2 + len(VISIBLE_CATS) + len(PRODUCTS) + (1 if CONS_CATS else 0) + (1 if S["glossary"] else 0)
     print(f"Готово: {n_pages} сторінок у папці {DIST.name}/ ({len(PRODUCTS)} товарів, {len(VISIBLE_CATS)} категорій).")
     if DEMO:
         print("УВАГА: увімкнено демо-режим (demoMode: true). Сайт позначено як демо й закрито від індексації.")

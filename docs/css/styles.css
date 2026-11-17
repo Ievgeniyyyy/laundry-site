@@ -4,7 +4,7 @@
 :root {
   /* Світлий фон, темно-синій/графітовий основний, глибокий бірюзовий акцент.
      --accent проходить 4,5:1 на білому (≈5,1:1) і під білим текстом кнопок; --accent-bright — лише декор. */
-  --navy: #0e2440;
+  --navy: #0b2e4f;
   --navy-2: #1a3352;
   --graphite: #232c38;
   --accent: #0b7a7c;
@@ -544,3 +544,46 @@ h2 { font-size: clamp(1.9rem, 3.4vw, 2.8rem); }
 .card__img--photo img { transform: scale(1.1); transform-origin: 50% 55%; }
 .card:hover .card__img--photo img { transform: scale(1.15); }
 .steps span { opacity: 1; }
+
+/* ===== За брифом бренду: помаранчеві головні кнопки, потік цеху, принципи, пакети, словник ===== */
+:root { --cta: #ff7a00; --cta-dark: #e96d00; }
+.btn--cta { background: var(--cta); color: #0b2e4f; box-shadow: 0 8px 20px rgba(255, 122, 0, .25); }
+.btn--cta:hover { background: var(--cta-dark); }
+.card__specs b, .price, .calc__result, .steps span, .trust__num, .pack__num { font-variant-numeric: tabular-nums; }
+
+.flow { margin: 0 0 50px; padding: 28px; background: #fff; border: 1px solid var(--line); border-radius: 18px; }
+.flow h3 { font-size: 1.3rem; color: var(--navy); margin-bottom: .3em; }
+.flow__list { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; counter-reset: flow; }
+.flow__list li { counter-increment: flow; position: relative; padding: 14px 12px 14px 14px; border-radius: 12px; background: var(--accent-soft); color: var(--navy); font-weight: 700; font-size: .95rem; line-height: 1.25; }
+.flow__list li::before { content: counter(flow, decimal-leading-zero); display: block; font-size: .78rem; color: var(--accent); margin-bottom: 4px; font-variant-numeric: tabular-nums; }
+.flow__list li:not(:last-child)::after { content: "→"; position: absolute; right: -11px; top: 50%; transform: translateY(-50%); color: var(--accent); font-weight: 800; z-index: 1; }
+.features__title { font-size: 1.3rem; color: var(--navy); margin-bottom: 20px; }
+.features { gap: 24px 28px; }
+.feature__ico { font-size: 1rem; font-variant-numeric: tabular-nums; }
+
+.packs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.pack { display: flex; flex-direction: column; padding: 28px; border: 1px solid var(--line); border-radius: 18px; background: #fff; box-shadow: var(--shadow); }
+.pack:nth-child(2) { border-color: var(--accent); }
+.pack__num { font-weight: 800; color: var(--accent); font-size: .9rem; }
+.pack h3 { font-size: 1.45rem; color: var(--navy); margin: 6px 0 6px; }
+.pack__for { color: var(--muted); font-size: .95rem; min-height: 2.9em; }
+.pack .ticks { margin: 4px 0 22px; }
+.pack .btn { margin-top: auto; align-self: flex-start; }
+
+.gloss { margin: 0 0 40px; border-top: 1px solid var(--line); }
+.gloss__row { display: grid; grid-template-columns: minmax(0, 320px) 1fr; gap: 8px 32px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.gloss dt { font-weight: 800; color: var(--navy); font-size: 1.05rem; }
+.gloss dd { margin: 0; color: #3c4858; }
+
+@media (max-width: 1024px) {
+  .flow__list { grid-template-columns: repeat(3, 1fr); }
+  .flow__list li:nth-child(3)::after { display: none; }
+  .packs { grid-template-columns: 1fr; }
+  .pack__for { min-height: 0; }
+}
+@media (max-width: 560px) {
+  .flow { padding: 20px 16px; }
+  .flow__list { grid-template-columns: repeat(2, 1fr); }
+  .flow__list li::after { display: none; }
+  .gloss__row { grid-template-columns: 1fr; }
+}
