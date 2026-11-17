@@ -222,13 +222,7 @@
         "a": "Так, надаємо повний пакет документів для юридичних осіб і ФОП."
       }
     ],
-    "brands": [
-      "Miele",
-      "Fagor",
-      "ItalClean",
-      "Danube",
-      "Hoover"
-    ],
+    "brands": [],
     "packages": [
       {
         "name": "Старт",

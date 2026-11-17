@@ -23,6 +23,33 @@ if "--out" in sys.argv:
 # --base /назва-репозиторію : сайт лежить у підпапці (GitHub Pages без власного домену)
 BASE = sys.argv[sys.argv.index("--base") + 1].rstrip("/") if "--base" in sys.argv else ""
 
+# Друга колірна версія: python3 build.py --theme blue --out dist-blue
+# Замінює бірюзовий акцент на насичений синій у готових файлах; вихідні файли не змінюються.
+THEME = sys.argv[sys.argv.index("--theme") + 1] if "--theme" in sys.argv else ""
+THEMES = {
+    "blue": [
+        ("#0b7a7c", "#1560d4"), ("#075f61", "#0f49a8"), ("#13a6a8", "#3b8bff"), ("#e2f3f3", "#e6effc"),
+        ("rgba(11, 122, 124", "rgba(21, 96, 212"), ("rgba(11,122,124", "rgba(21,96,212"),
+        ("глибокий бірюзовий акцент", "насичений синій акцент"),
+    ],
+}
+
+
+def apply_theme():
+    if not THEME:
+        return
+    if THEME not in THEMES:
+        sys.exit(f"Невідома тема: {THEME}. Доступні: {', '.join(THEMES)}")
+    for f in DIST.rglob("*"):
+        if f.suffix in (".css", ".html", ".svg"):
+            t = f.read_text(encoding="utf-8")
+            n = t
+            for old, new in THEMES[THEME]:
+                n = n.replace(old, new)
+            if n != t:
+                f.write_text(n, encoding="utf-8")
+
+
 
 def _filled(v):
     if isinstance(v, list):
@@ -241,7 +268,7 @@ def layout(title, desc, path, body, schemas=(), og_img=None, preload=None):
 
     header_phone = (f'<a class="header__phone" href="{tel_href(S["phone"])}" aria-label="Подзвонити: {e(S["phone"])}">{ICON_PHONE}<span>{e(S["phone"])}</span></a>'
                     if S["phone"] else "")
-    ribbon = '<div class="demo-ribbon" role="note">Демо-версія: контакти, ціни, частина товарів, бренди й цифри — умовні</div>' if DEMO else ""
+    ribbon = '<div class="demo-ribbon" role="note">Демо-версія: контакти, ціни, частина товарів і цифри — умовні</div>' if DEMO else ""
     canonical = f'<link rel="canonical" href="{SITE_URL}{path}">' if SITE_URL else ""
     robots = '<meta name="robots" content="noindex, nofollow">' if DEMO else ""
     og = og_img or "/img/products/fw-1.webp"
@@ -726,6 +753,7 @@ def main():
         glossary_page()
     privacy_page()
     service_files()
+    apply_theme()
 
     n_pages = 2 + len(VISIBLE_CATS) + len(PRODUCTS) + (1 if CONS_CATS else 0) + (1 if S["glossary"] else 0)
     print(f"Готово: {n_pages} сторінок у папці {DIST.name}/ ({len(PRODUCTS)} товарів, {len(VISIBLE_CATS)} категорій).")

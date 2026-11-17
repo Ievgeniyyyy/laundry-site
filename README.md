@@ -45,6 +45,14 @@ python3 -m http.server 8080 --directory dist
 python3 build.py --real --out dist-real
 ```
 
+## Друга колірна версія (синя)
+
+Основна версія — з бірюзовим акцентом. Щоб зібрати таку саму, але з синім акцентом, в окрему папку:
+
+```bash
+python3 build.py --theme blue --out dist-blue
+```
+
 ## Перед публікацією
 
 1. Заповнити розділ `real` у `data/site.json` (скрипт збирання щоразу друкує список незаповненого).
@@ -67,6 +75,12 @@ python3 build.py --out docs --base /laundry-site
 
 ```bash
 git add -A && git commit -m "Оновлення сайту" && git push
+```
+
+Синя версія для порівняння лежить за адресою https://ievgeniyyyy.github.io/laundry-site/blue/ . Перша команда вище її стирає, тож після неї зберіть синю знову:
+
+```bash
+python3 build.py --theme blue --out docs/blue --base /laundry-site/blue
 ```
 
 Через 1–2 хвилини зміни зʼявляться за посиланням.

@@ -2,3 +2,4 @@ dist/
 dist-real/
 .DS_Store
 __pycache__/
+dist-blue/
