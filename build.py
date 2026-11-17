@@ -59,6 +59,8 @@ for p in cat_raw["products"]:
 VISIBLE_CATS = [c for c in CATS if any(p["cat"] == c["id"] for p in PRODUCTS)]
 for c in VISIBLE_CATS:
     c["url"] = f"/{c['slug']}/"
+CONS_CATS = [c for c in VISIBLE_CATS if c["type"] == "consumable"]
+CONS_URL = "/vytratni-materialy/"
 
 ICONS = {
     "washer": '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="8" y="5" width="32" height="38" rx="5"/><line x1="8" y1="14" x2="40" y2="14"/><circle cx="14" cy="9.5" r="1.3" fill="currentColor"/><circle cx="24" cy="28" r="9"/><path d="M18 29c2-2 4 2 6 0s4-1 6 0"/></svg>',
@@ -183,7 +185,10 @@ HP = '<div class="hp" aria-hidden="true"><label>Не заповнюйте це �
 def layout(title, desc, path, body, schemas=(), og_img=None, preload=None):
     logo_a, logo_b = (S["logoParts"] + ["", ""])[:2] if S["logoParts"] else ("", "")
     logo_text = f"<b>{e(logo_a)}</b> {e(logo_b)}" if (logo_a or logo_b) else e(BRAND)
-    nav = [("Каталог", "/#catalog"), ("Рішення", "/#solutions")]
+    nav = [("Каталог", "/#catalog")]
+    if CONS_CATS:
+        nav.append(("Витратні матеріали", CONS_URL))
+    nav.append(("Рішення", "/#solutions"))
     if S["steps"] or S["features"]:
         nav.append(("Послуги", "/#services"))
     if S["aboutText"]:
@@ -292,7 +297,7 @@ def layout(title, desc, path, body, schemas=(), og_img=None, preload=None):
   <div class="container footer__inner">
     <div><a href="/" class="logo logo--light"><span>{logo_text}</span></a>
       <p>© {year} {e(BRAND)}. Професійне пральне обладнання та витратні матеріали.</p></div>
-    <nav class="footer__nav" aria-label="Меню у підвалі">{"".join(f'<a href="{c["url"]}">{e(c["name"])}</a>' for c in VISIBLE_CATS)}<a href="/polityka-konfidentsiinosti/">Політика конфіденційності</a></nav>
+    <nav class="footer__nav" aria-label="Меню у підвалі">{"".join(f'<a href="{c["url"]}">{e(c["name"])}</a>' for c in VISIBLE_CATS)}{f'<a href="{CONS_URL}">Витратні матеріали</a>' if CONS_CATS else ""}<a href="/polityka-konfidentsiinosti/">Політика конфіденційності</a></nav>
   </div>
 </footer>
 <aside class="drawer" id="drawer" hidden>
@@ -522,6 +527,33 @@ def category_page(c):
                            og_img=f"/img/products/{first['img'][0]}.webp" if first else None))
 
 
+def consumables_page():
+    cr = [("Головна", "/"), ("Витратні матеріали", None)]
+    intro = ("Хімія, аксесуари та витратні матеріали для щоденної роботи пралень і хімчисток. "
+             "Позиції з ціною можна замовити одразу через кошик.")
+    nav = "".join(f'<a class="chip" href="#{c["id"]}">{e(c["name"])}</a>' for c in CONS_CATS)
+    groups = ""
+    for c in CONS_CATS:
+        items = [p for p in PRODUCTS if p["cat"] == c["id"]]
+        groups += (f'<section class="cons-group" id="{c["id"]}" aria-labelledby="h-{c["id"]}">'
+                   f'<div class="cons-group__head"><h2 id="h-{c["id"]}">{e(c["name"])}</h2>'
+                   f'<a class="cons-group__all" href="{c["url"]}">Уся категорія {ARROW}</a></div>'
+                   f'<p class="muted">{e(c["intro"])}</p>'
+                   f'<div class="grid">{"".join(card(p, "h3") for p in items)}</div></section>')
+    body = f'''<section class="section section--page"><div class="container">
+  {crumbs(cr)}
+  <div class="section__head"><h1 class="h-page">Витратні матеріали</h1><p>{e(intro)}</p></div>
+  <nav class="filters" aria-label="Розділи">{nav}</nav>
+  {groups}
+  <div class="page-cta"><p>Потрібні регулярні поставки або позиції, яких немає в каталозі? Напишіть нам — підготуємо пропозицію.</p><a class="btn btn--primary" href="/#contacts">Отримати консультацію</a></div>
+</div></section>'''
+    items = [p for p in PRODUCTS if CAT[p["cat"]]["type"] == "consumable"]
+    schemas = [crumbs_schema(cr, CONS_URL),
+               {"@context": "https://schema.org", "@type": "ItemList", "name": "Витратні матеріали", "itemListElement": [
+                   {"@type": "ListItem", "position": i + 1, "name": p["name"], "url": absu(p["url"])} for i, p in enumerate(items)]}]
+    write(CONS_URL, layout(f"Витратні матеріали для пралень і хімчисток — {BRAND}", intro, CONS_URL, body, schemas))
+
+
 # ---------- сторінка товару
 def product_page(p):
     c = CAT[p["cat"]]
@@ -609,7 +641,7 @@ def service_files():
 
     bots = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "Google-Extended", "PerplexityBot", "ClaudeBot", "Claude-SearchBot"]
     robots = "User-agent: *\nAllow: /\n\n" + "".join(f"User-agent: {b}\nAllow: /\n\n" for b in bots)
-    pages = ["/"] + [c["url"] for c in VISIBLE_CATS] + [p["url"] for p in PRODUCTS] + ["/polityka-konfidentsiinosti/"]
+    pages = ["/"] + ([CONS_URL] if CONS_CATS else []) + [c["url"] for c in VISIBLE_CATS] + [p["url"] for p in PRODUCTS] + ["/polityka-konfidentsiinosti/"]
     if SITE_URL:
         robots += f"Sitemap: {SITE_URL}/sitemap.xml\n"
         sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(
@@ -652,10 +684,12 @@ def main():
         category_page(c)
     for p in PRODUCTS:
         product_page(p)
+    if CONS_CATS:
+        consumables_page()
     privacy_page()
     service_files()
 
-    n_pages = 2 + len(VISIBLE_CATS) + len(PRODUCTS)
+    n_pages = 2 + len(VISIBLE_CATS) + len(PRODUCTS) + (1 if CONS_CATS else 0)
     print(f"Готово: {n_pages} сторінок у папці {DIST.name}/ ({len(PRODUCTS)} товарів, {len(VISIBLE_CATS)} категорій).")
     if DEMO:
         print("УВАГА: увімкнено демо-режим (demoMode: true). Сайт позначено як демо й закрито від індексації.")
