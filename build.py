@@ -72,16 +72,17 @@ ICONS = {
     "box": '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 15 24 6l18 9v18l-18 9-18-9V15Z"/><path d="m6 15 18 9 18-9M24 24v18"/></svg>',
 }
 LOGO_SVG = ('<svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true">'
-            '<path d="M24 4C24 4 12 18 12 27a12 12 0 0 0 24 0C36 18 24 4 24 4Z" fill="#1f7fd1"/>'
+            '<path d="M24 4C24 4 12 18 12 27a12 12 0 0 0 24 0C36 18 24 4 24 4Z" fill="#0b7a7c"/>'
             '<path d="M18 26c1.5 4 4.5 6 8.5 6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".85"/>'
-            '<path d="M3 36c6-4 11-4 17 0s12 4 18 0 6-3 7-3" fill="none" stroke="#0d3b7a" stroke-width="3.4" stroke-linecap="round"/>'
-            '<path d="M7 42c5-3 9-3 14 0s10 3 15 0" fill="none" stroke="#1f7fd1" stroke-width="3" stroke-linecap="round"/></svg>')
+            '<path d="M3 36c6-4 11-4 17 0s12 4 18 0 6-3 7-3" fill="none" stroke="#0e2440" stroke-width="3.4" stroke-linecap="round"/>'
+            '<path d="M7 42c5-3 9-3 14 0s10 3 15 0" fill="none" stroke="#13a6a8" stroke-width="3" stroke-linecap="round"/></svg>')
 ARROW = '<svg class="ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h13m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 ICON_CALC = '<svg class="ico" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="6" width="8" height="3" rx=".8" fill="currentColor"/><g fill="currentColor"><circle cx="9" cy="13" r="1.1"/><circle cx="12" cy="13" r="1.1"/><circle cx="15" cy="13" r="1.1"/><circle cx="9" cy="17" r="1.1"/><circle cx="12" cy="17" r="1.1"/><circle cx="15" cy="17" r="1.1"/></g></svg>'
 ICON_CHAT = '<svg class="ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>'
 ICON_PHONE = '<svg class="ico" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6.6 3.5 9 3l1.6 4.2-2 1.3a11 11 0 0 0 6.9 6.9l1.3-2L21 15l-.5 2.4A2.5 2.5 0 0 1 18 19.5 15.5 15.5 0 0 1 4.5 6a2.5 2.5 0 0 1 2.1-2.5Z" fill="currentColor"/></svg>'
 _T = '<svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
 TRUST_ICONS = {
+    "project": _T + '<rect x="6" y="6" width="28" height="28" rx="3"/><path d="M6 15h10v19M16 22h18M24 6v9"/></svg>',
     "turnkey": _T + '<path d="M6 13 20 6l14 7v14l-14 7-14-7V13Z"/><path d="m6 13 14 7 14-7M20 20v14M13 9.5l14 7"/></svg>',
     "service": _T + '<path d="M25 8a7 7 0 0 0-6.6 9.3L7.5 28.2a3 3 0 0 0 4.3 4.3l10.9-10.9A7 7 0 0 0 32 15l-4.3 4.3-4.6-1.3-1.3-4.6L25 8Z"/></svg>',
     "warranty": _T + '<path d="M20 5 8 9.5v9c0 8 5.2 13.6 12 16.5 6.8-2.9 12-8.5 12-16.5v-9L20 5Z"/><path d="m14.5 20 4 4 7.5-8"/></svg>',
@@ -152,9 +153,8 @@ def card(p, h="h3"):
     return f'''<article class="card" data-cat="{p["cat"]}" data-price="{p["priceShown"] or 0}" data-name="{e((p["name"] + " " + p["desc"]).lower())}">
   <a class="card__img{photo}" href="{p["url"]}" tabindex="-1" aria-hidden="true">{visual}{badge}<span class="card__tag">{tag}</span></a>
   <div class="card__body">
-    <span class="card__cat">{e(cat["name"])}</span>
     <{h} class="card__title"><a href="{p["url"]}">{e(p["name"])}</a></{h}>
-    {specs_html(p, 3)}
+    {specs_html(p, 2)}
     <div class="card__foot">{price_html(p)}{add_btn(p)}</div>
   </div>
 </article>'''
@@ -338,9 +338,9 @@ def home():
   <div class="container hero__inner">
   <div class="hero__text">
     {eyebrow_html}
-    <h1>Професійні пральні рішення для вашого бізнесу</h1>
+    <h1>Проєктуємо, комплектуємо й запускаємо професійні пральні під ключ</h1>
     <p class="lead">{e(lead)}</p>
-    <div class="hero__cta"><a href="#categories" class="btn btn--primary">Переглянути обладнання {ARROW}</a><a href="#calc" class="btn btn--outline">{ICON_CALC}Розрахувати пральню</a></div>
+    <div class="hero__cta"><a href="#contacts" class="btn btn--primary">Замовити проєкт пральні {ARROW}</a><a href="#calc" class="btn btn--outline">{ICON_CALC}Розрахувати пральню</a></div>
   </div>
   <div class="hero__visual">
     <img class="showroom" src="/img/hero/showroom-sm.webp" srcset="/img/hero/showroom-sm.webp 800w, /img/hero/showroom.webp 1868w"
@@ -351,8 +351,9 @@ def home():
 
     trust = ""
     if S["trust"]:
-        ti = "".join(f'<li>{TRUST_ICONS.get(t["icon"], TRUST_ICONS["warranty"])}<span>{e(t["text"])}</span></li>' for t in S["trust"])
-        trust = f'<section class="trust" aria-label="Наші переваги"><div class="container"><ul class="trust__list">{ti}</ul></div></section>'
+        ti = "".join(f'<li><span class="trust__num" aria-hidden="true">{i + 1:02d}</span>{TRUST_ICONS.get(t["icon"], TRUST_ICONS["warranty"])}<span>{e(t["text"])}</span></li>'
+                     for i, t in enumerate(S["trust"]))
+        trust = f'<section class="trust" aria-label="Як ми запускаємо пральню"><div class="container"><ol class="trust__list">{ti}</ol></div></section>'
 
     spotlight = ""
     if spot:
@@ -666,7 +667,7 @@ def service_files():
         lines += ["", "## Контакти", *[f"- {x}" for x in contact]]
     write("/llms.txt", "\n".join(lines) + "\n")
 
-    fav = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M24 3C24 3 11 18 11 28a13 13 0 0 0 26 0C37 18 24 3 24 3Z" fill="#1558b0"/>'
+    fav = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M24 3C24 3 11 18 11 28a13 13 0 0 0 26 0C37 18 24 3 24 3Z" fill="#0b7a7c"/>'
            '<path d="M17 28c1.5 4.5 5 7 9.5 7" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>')
     write("/favicon.svg", fav)
     (DIST / ".nojekyll").write_text("")
