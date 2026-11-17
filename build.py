@@ -69,7 +69,22 @@ ICONS = {
     "chem": '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 5h12M20 5v10l-9 19a5 5 0 0 0 4.5 7h17a5 5 0 0 0 4.5-7l-9-19V5"/><path d="M14 30h20"/><circle cx="21" cy="35" r="1.5" fill="currentColor"/><circle cx="27" cy="34" r="1" fill="currentColor"/></svg>',
     "box": '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 15 24 6l18 9v18l-18 9-18-9V15Z"/><path d="m6 15 18 9 18-9M24 24v18"/></svg>',
 }
-LOGO_SVG = '<svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true"><rect x="3" y="3" width="26" height="26" rx="7" fill="currentColor"/><circle cx="16" cy="17" r="7" fill="none" stroke="#fff" stroke-width="2.5"/><circle cx="9" cy="8.5" r="1.5" fill="#fff"/><path d="M11 18c2-2 4 2 6 0s3-1 4 0" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>'
+LOGO_SVG = ('<svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true">'
+            '<path d="M24 4C24 4 12 18 12 27a12 12 0 0 0 24 0C36 18 24 4 24 4Z" fill="#1f7fd1"/>'
+            '<path d="M18 26c1.5 4 4.5 6 8.5 6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".85"/>'
+            '<path d="M3 36c6-4 11-4 17 0s12 4 18 0 6-3 7-3" fill="none" stroke="#0d3b7a" stroke-width="3.4" stroke-linecap="round"/>'
+            '<path d="M7 42c5-3 9-3 14 0s10 3 15 0" fill="none" stroke="#1f7fd1" stroke-width="3" stroke-linecap="round"/></svg>')
+ARROW = '<svg class="ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h13m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+ICON_CALC = '<svg class="ico" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="6" width="8" height="3" rx=".8" fill="currentColor"/><g fill="currentColor"><circle cx="9" cy="13" r="1.1"/><circle cx="12" cy="13" r="1.1"/><circle cx="15" cy="13" r="1.1"/><circle cx="9" cy="17" r="1.1"/><circle cx="12" cy="17" r="1.1"/><circle cx="15" cy="17" r="1.1"/></g></svg>'
+ICON_CHAT = '<svg class="ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>'
+ICON_PHONE = '<svg class="ico" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6.6 3.5 9 3l1.6 4.2-2 1.3a11 11 0 0 0 6.9 6.9l1.3-2L21 15l-.5 2.4A2.5 2.5 0 0 1 18 19.5 15.5 15.5 0 0 1 4.5 6a2.5 2.5 0 0 1 2.1-2.5Z" fill="currentColor"/></svg>'
+_T = '<svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+TRUST_ICONS = {
+    "turnkey": _T + '<path d="M6 13 20 6l14 7v14l-14 7-14-7V13Z"/><path d="m6 13 14 7 14-7M20 20v14M13 9.5l14 7"/></svg>',
+    "service": _T + '<path d="M25 8a7 7 0 0 0-6.6 9.3L7.5 28.2a3 3 0 0 0 4.3 4.3l10.9-10.9A7 7 0 0 0 32 15l-4.3 4.3-4.6-1.3-1.3-4.6L25 8Z"/></svg>',
+    "warranty": _T + '<path d="M20 5 8 9.5v9c0 8 5.2 13.6 12 16.5 6.8-2.9 12-8.5 12-16.5v-9L20 5Z"/><path d="m14.5 20 4 4 7.5-8"/></svg>',
+    "training": _T + '<circle cx="20" cy="13" r="5"/><path d="M10 33c0-6 4.5-10 10-10s10 4 10 10"/><circle cx="31" cy="11" r="3.5"/><path d="M33 20.5c2.8.9 4.5 3.6 4.5 7"/><circle cx="9" cy="11" r="3.5"/><path d="M7 20.5c-2.8.9-4.5 3.6-4.5 7"/></svg>',
+}
 
 
 # ---------- дрібні помічники
@@ -167,7 +182,7 @@ HP = '<div class="hp" aria-hidden="true"><label>Не заповнюйте це �
 # ---------- каркас сторінки
 def layout(title, desc, path, body, schemas=(), og_img=None, preload=None):
     logo_a, logo_b = (S["logoParts"] + ["", ""])[:2] if S["logoParts"] else ("", "")
-    logo_text = f"{e(logo_a)}<b>{e(logo_b)}</b>" if (logo_a or logo_b) else e(BRAND)
+    logo_text = f"<b>{e(logo_a)}</b> {e(logo_b)}" if (logo_a or logo_b) else e(BRAND)
     nav = [("Каталог", "/#catalog"), ("Рішення", "/#solutions")]
     if S["steps"] or S["features"]:
         nav.append(("Послуги", "/#services"))
@@ -219,12 +234,14 @@ def layout(title, desc, path, body, schemas=(), og_img=None, preload=None):
     <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M4 5h16v11H8l-4 4V5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="9" cy="10.5" r="1.2" fill="currentColor"/><circle cx="12" cy="10.5" r="1.2" fill="currentColor"/><circle cx="15" cy="10.5" r="1.2" fill="currentColor"/></svg>
   </button></div>''' if chat_links else ""
 
-    ribbon = '<div class="demo-ribbon" role="note">Демо-версія: назва, контакти, ціни, частина товарів і цифри — умовні</div>' if DEMO else ""
+    header_phone = (f'<a class="header__phone" href="{tel_href(S["phone"])}" aria-label="Подзвонити: {e(S["phone"])}">{ICON_PHONE}<span>{e(S["phone"])}</span></a>'
+                    if S["phone"] else "")
+    ribbon = '<div class="demo-ribbon" role="note">Демо-версія: контакти, ціни, частина товарів, бренди й цифри — умовні</div>' if DEMO else ""
     canonical = f'<link rel="canonical" href="{SITE_URL}{path}">' if SITE_URL else ""
     robots = '<meta name="robots" content="noindex, nofollow">' if DEMO else ""
     og = og_img or "/img/products/fw-1.webp"
     ld = "".join(f'<script type="application/ld+json">{json.dumps(s, ensure_ascii=False)}</script>' for s in schemas)
-    pre = f'<link rel="preload" as="image" href="{preload}" fetchpriority="high">' if preload else ""
+    pre = preload if preload and preload.startswith("<") else (f'<link rel="preload" as="image" href="{preload}" fetchpriority="high">' if preload else "")
     year = "2026"
 
     return f'''<!doctype html>
@@ -241,7 +258,7 @@ def layout(title, desc, path, body, schemas=(), og_img=None, preload=None):
 <meta property="og:title" content="{e(title)}">
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:image" content="{absu(og)}">
-<meta name="theme-color" content="#0b2239">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 {pre}
@@ -251,7 +268,6 @@ def layout(title, desc, path, body, schemas=(), og_img=None, preload=None):
 <body>
 <a class="skip" href="#main">Перейти до змісту</a>
 {ribbon}
-{topbar}
 <header class="header">
   <div class="container header__inner">
     <a href="/" class="logo" aria-label="{e(BRAND)} — на головну">{LOGO_SVG}<span>{logo_text}</span></a>
@@ -261,7 +277,8 @@ def layout(title, desc, path, body, schemas=(), og_img=None, preload=None):
         <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>
         <span class="cart-count" id="cartCount">0</span>
       </button>
-      <a href="/#contacts" class="btn btn--primary btn--sm hide-mobile">Консультація</a>
+      {header_phone}
+      <a href="/#contacts" class="btn btn--primary btn--sm hide-mobile">{ICON_CHAT}Отримати консультацію</a>
       <button class="burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -306,24 +323,31 @@ def home():
     spot = next((p for p in PRODUCTS if p["id"] == "combo"), None)
     eyebrow = f"Офіційний дилер {S['manufacturerBrand']}" if S["manufacturerBrand"] else "Обладнання та витратні матеріали"
 
-    facts = "".join(f"<li><b>{e(f['value'])}</b><span>{e(f['label'])}</span></li>" for f in S["heroFacts"])
-    facts = f'<ul class="hero__facts">{facts}</ul>' if facts else ""
-    hcards = "".join(f'<div class="hero__card hero__card--{i + 1}">{e(t)}</div>' for i, t in enumerate(S["heroCards"][:2]))
+    lead = S["heroLead"] or ("Пральні й сушильні машини, пральні колони та машини Combo для пралень самообслуговування, "
+                             "готелів і закладів." + (" А також хімія, аксесуари й витратні матеріали."
+                             if any(c["type"] == "consumable" for c in VISIBLE_CATS) else ""))
+    eyebrow_html = f'<p class="eyebrow">{e(eyebrow)}</p>' if S["manufacturerBrand"] else ""
 
-    hero = f'''<section class="hero"><div class="container hero__inner">
+    hero = f'''<section class="hero">
+  <div class="hero__scene" aria-hidden="true"></div>
+  <div class="container hero__inner">
   <div class="hero__text">
-    <p class="eyebrow">{e(eyebrow)}</p>
-    <h1>Професійне пральне обладнання <span class="accent">для вашого бізнесу</span></h1>
-    <p class="lead">Пральні й сушильні машини, пральні колони та машини Combo для пралень самообслуговування, готелів і закладів. А також хімія, аксесуари й витратні матеріали для пралень і хімчисток.</p>
-    <div class="hero__cta"><a href="#catalog" class="btn btn--primary">Перейти до каталогу</a><a href="#calc" class="btn btn--ghost">Розрахувати пральню</a></div>
-    {facts}
+    {eyebrow_html}
+    <h1>Професійні пральні рішення для вашого бізнесу</h1>
+    <p class="lead">{e(lead)}</p>
+    <div class="hero__cta"><a href="#categories" class="btn btn--primary">Переглянути обладнання {ARROW}</a><a href="#calc" class="btn btn--outline">{ICON_CALC}Розрахувати пральню</a></div>
   </div>
-  <div class="hero__visual"><div class="lineup">
-    {img("fwdd-1", "Пральна колона FWDD", "(max-width: 860px) 45vw, 270px", "lineup__side lineup__side--l")}
-    {img("fw-1", "Пральна машина серії FW", "(max-width: 860px) 60vw, 330px", "lineup__main", eager=True)}
-    {img("dd-1", "Двоярусна сушильна машина DD", "(max-width: 860px) 45vw, 270px", "lineup__side lineup__side--r")}
-  </div>{hcards}</div>
+  <div class="hero__visual">
+    <img class="showroom" src="/img/hero/showroom-sm.webp" srcset="/img/hero/showroom-sm.webp 800w, /img/hero/showroom.webp 1868w"
+      sizes="(max-width: 860px) 100vw, 62vw" width="1868" height="862" fetchpriority="high"
+      alt="Пральні машини, сушильні машини та пральні колони в ряд">
+  </div>
 </div></section>'''
+
+    trust = ""
+    if S["trust"]:
+        ti = "".join(f'<li>{TRUST_ICONS.get(t["icon"], TRUST_ICONS["warranty"])}<span>{e(t["text"])}</span></li>' for t in S["trust"])
+        trust = f'<section class="trust" aria-label="Наші переваги"><div class="container"><ul class="trust__list">{ti}</ul></div></section>'
 
     spotlight = ""
     if spot:
@@ -356,14 +380,23 @@ def home():
     for c in VISIBLE_CATS:
         items = [p for p in PRODUCTS if p["cat"] == c["id"]]
         w = next((p for p in items if p.get("img")), None)
-        vis = (f'<span class="cat__photo">{img(w["img"][0], "", "120px")}</span>' if w
-               else f'<span class="cat__ico">{ICONS[c["icon"]]}</span>')
-        n = len(items)
-        word = "позиція" if n % 10 == 1 and n % 100 != 11 else ("позиції" if n % 10 in (2, 3, 4) and n % 100 not in (12, 13, 14) else "позицій")
-        cats += f'<a class="cat" href="{c["url"]}">{vis}<span class="cat__name">{e(c["name"])}</span><span class="cat__count">{n} {word}</span></a>'
-    categories = f'''<section class="section section--alt" id="categories"><div class="container">
-  <div class="section__head"><h2>Категорії</h2><p>Обладнання й усе необхідне для щоденної роботи пральні та хімчистки.</p></div>
-  <div class="cats">{cats}</div></div></section>'''
+        vis = (img(w["img"][0], "", "(max-width: 560px) 45vw, 200px") if w
+               else f'<span class="tile__ico">{ICONS[c["icon"]]}</span>')
+        cats += (f'<a class="tile" href="{c["url"]}"><span class="tile__img">{vis}</span>'
+                 f'<span class="tile__body"><h3 class="tile__name">{e(c["name"])}</h3>'
+                 f'<span class="tile__text">{e(c.get("short", ""))}</span><span class="tile__arrow">{ARROW}</span></span></a>')
+    has_cons = any(c["type"] == "consumable" for c in VISIBLE_CATS)
+    cons_note = "<p>А також хімія, аксесуари й витратні матеріали для щоденної роботи пральні та хімчистки.</p>" if has_cons else ""
+    categories = f'''<section class="section" id="categories"><div class="container">
+  <div class="section__head section__head--center"><h2>Обладнання для професійного прання</h2>{cons_note}</div>
+  <div class="tiles">{cats}</div></div></section>'''
+
+    brands = ""
+    if S["brands"]:
+        bl = "".join(f"<li>{e(b)}</li>" for b in S["brands"])
+        brands = f'''<section class="section section--tight" id="brands"><div class="container">
+  <div class="section__head section__head--center"><h2>Бренди, з якими ми працюємо</h2></div>
+  <ul class="brands">{bl}</ul></div></section>'''
 
     chips = '<button type="button" class="chip is-active" data-filter="all" aria-pressed="true">Усі</button>' + "".join(
         f'<button type="button" class="chip" data-filter="{c["id"]}" aria-pressed="false">{e(c["name"])}</button>' for c in VISIBLE_CATS)
@@ -388,7 +421,7 @@ def home():
         steps = "".join(f'<li><span>{i + 1:02d}</span><h3>{e(s["title"])}</h3><p>{e(s["text"])}</p></li>' for i, s in enumerate(S["steps"]))
         feats = "".join(f'<div class="feature"><div class="feature__ico" aria-hidden="true">{e(f["icon"])}</div><h3>{e(f["title"])}</h3><p>{e(f["text"])}</p></div>' for f in S["features"])
         services = f'''<section class="section section--alt" id="services"><div class="container">
-  <div class="section__head"><p class="eyebrow">Послуги</p><h2>Не лише продаємо — запускаємо</h2></div>
+  <div class="section__head"><p class="eyebrow">Пральня під ключ</p><h2>Від ідеї до запуску пральні</h2><p>Не лише продаємо обладнання: проєктуємо, комплектуємо, монтуємо й запускаємо.</p></div>
   {f'<ol class="steps">{steps}</ol>' if steps else ""}{f'<div class="features">{feats}</div>' if feats else ""}
 </div></section>'''
 
@@ -429,6 +462,10 @@ def home():
         clist += f'<li><b>Email:</b> <a href="mailto:{e(S["email"])}">{e(S["email"])}</a></li>'
     if S["address"]:
         clist += f'<li><b>Адреса:</b> {e(S["address"])}</li>'
+    if S["hours"]:
+        clist += f'<li><b>Графік:</b> {e(S["hours"])}</li>'
+    if S["delivery"]:
+        clist += f'<li>{e(S["delivery"])}</li>'
     contacts = f'''<section class="section" id="contacts"><div class="container contacts">
   <div><h2>Отримайте консультацію</h2>
     <p class="muted">Розкажіть про свій обʼєкт — підберемо обладнання й підготуємо комерційну пропозицію.</p>
@@ -461,10 +498,10 @@ def home():
         schemas.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
             {"@type": "Question", "name": f["q"], "acceptedAnswer": {"@type": "Answer", "text": f["a"]}} for f in S["faq"]]})
 
-    body = hero + spotlight + solutions + categories + catalog + services + calc + reviews + faq + about + contacts
+    body = hero + trust + categories + services + solutions + spotlight + catalog + brands + calc + reviews + faq + about + contacts
     title = f"{BRAND} — професійне пральне обладнання та витратні матеріали"
     desc = "Пральні й сушильні машини, пральні колони та машини Combo для пралень самообслуговування, готелів і закладів. Хімія, аксесуари й витратні матеріали для пралень і хімчисток."
-    write("/", layout(title, desc, "/", body, schemas, preload="/img/products/fw-1-sm.webp"))
+    write("/", layout(title, desc, "/", body, schemas, preload='<link rel="preload" as="image" imagesrcset="/img/hero/showroom-sm.webp 800w, /img/hero/showroom.webp 1868w" imagesizes="(max-width: 860px) 100vw, 62vw" fetchpriority="high">'))
 
 
 # ---------- сторінка категорії
@@ -597,7 +634,8 @@ def service_files():
         lines += ["", "## Контакти", *[f"- {x}" for x in contact]]
     write("/llms.txt", "\n".join(lines) + "\n")
 
-    fav = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="3" y="3" width="26" height="26" rx="7" fill="#0a6f7a"/><circle cx="16" cy="17" r="7" fill="none" stroke="#fff" stroke-width="2.5"/><circle cx="9" cy="8.5" r="1.5" fill="#fff"/></svg>'
+    fav = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M24 3C24 3 11 18 11 28a13 13 0 0 0 26 0C37 18 24 3 24 3Z" fill="#1558b0"/>'
+           '<path d="M17 28c1.5 4.5 5 7 9.5 7" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>')
     write("/favicon.svg", fav)
     (DIST / ".nojekyll").write_text("")
 
