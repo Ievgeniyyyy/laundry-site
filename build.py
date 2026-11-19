@@ -23,32 +23,6 @@ if "--out" in sys.argv:
 # --base /назва-репозиторію : сайт лежить у підпапці (GitHub Pages без власного домену)
 BASE = sys.argv[sys.argv.index("--base") + 1].rstrip("/") if "--base" in sys.argv else ""
 
-# Друга колірна версія: python3 build.py --theme blue --out dist-blue
-# Замінює бірюзовий акцент на насичений синій у готових файлах; вихідні файли не змінюються.
-THEME = sys.argv[sys.argv.index("--theme") + 1] if "--theme" in sys.argv else ""
-THEMES = {
-    "blue": [
-        ("#0b7a7c", "#1560d4"), ("#075f61", "#0f49a8"), ("#13a6a8", "#3b8bff"), ("#e2f3f3", "#e6effc"),
-        ("rgba(11, 122, 124", "rgba(21, 96, 212"), ("rgba(11,122,124", "rgba(21,96,212"),
-        ("глибокий бірюзовий акцент", "насичений синій акцент"),
-    ],
-}
-
-
-def apply_theme():
-    if not THEME:
-        return
-    if THEME not in THEMES:
-        sys.exit(f"Невідома тема: {THEME}. Доступні: {', '.join(THEMES)}")
-    for f in DIST.rglob("*"):
-        if f.suffix in (".css", ".html", ".svg"):
-            t = f.read_text(encoding="utf-8")
-            n = t
-            for old, new in THEMES[THEME]:
-                n = n.replace(old, new)
-            if n != t:
-                f.write_text(n, encoding="utf-8")
-
 
 
 def _filled(v):
@@ -99,10 +73,10 @@ ICONS = {
     "box": '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 15 24 6l18 9v18l-18 9-18-9V15Z"/><path d="m6 15 18 9 18-9M24 24v18"/></svg>',
 }
 LOGO_SVG = ('<svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true">'
-            '<path d="M24 4C24 4 12 18 12 27a12 12 0 0 0 24 0C36 18 24 4 24 4Z" fill="#0b7a7c"/>'
+            '<path d="M24 4C24 4 12 18 12 27a12 12 0 0 0 24 0C36 18 24 4 24 4Z" fill="#1560d4"/>'
             '<path d="M18 26c1.5 4 4.5 6 8.5 6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".85"/>'
             '<path d="M3 36c6-4 11-4 17 0s12 4 18 0 6-3 7-3" fill="none" stroke="#0e2440" stroke-width="3.4" stroke-linecap="round"/>'
-            '<path d="M7 42c5-3 9-3 14 0s10 3 15 0" fill="none" stroke="#13a6a8" stroke-width="3" stroke-linecap="round"/></svg>')
+            '<path d="M7 42c5-3 9-3 14 0s10 3 15 0" fill="none" stroke="#3b8bff" stroke-width="3" stroke-linecap="round"/></svg>')
 ARROW = '<svg class="ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h13m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 ICON_CALC = '<svg class="ico" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="6" width="8" height="3" rx=".8" fill="currentColor"/><g fill="currentColor"><circle cx="9" cy="13" r="1.1"/><circle cx="12" cy="13" r="1.1"/><circle cx="15" cy="13" r="1.1"/><circle cx="9" cy="17" r="1.1"/><circle cx="12" cy="17" r="1.1"/><circle cx="15" cy="17" r="1.1"/></g></svg>'
 ICON_CHAT = '<svg class="ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>'
@@ -729,7 +703,7 @@ def service_files():
         lines += ["", "## Контакти", *[f"- {x}" for x in contact]]
     write("/llms.txt", "\n".join(lines) + "\n")
 
-    fav = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M24 3C24 3 11 18 11 28a13 13 0 0 0 26 0C37 18 24 3 24 3Z" fill="#0b7a7c"/>'
+    fav = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M24 3C24 3 11 18 11 28a13 13 0 0 0 26 0C37 18 24 3 24 3Z" fill="#1560d4"/>'
            '<path d="M17 28c1.5 4.5 5 7 9.5 7" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>')
     write("/favicon.svg", fav)
     (DIST / ".nojekyll").write_text("")
@@ -753,7 +727,6 @@ def main():
         glossary_page()
     privacy_page()
     service_files()
-    apply_theme()
 
     n_pages = 2 + len(VISIBLE_CATS) + len(PRODUCTS) + (1 if CONS_CATS else 0) + (1 if S["glossary"] else 0)
     print(f"Готово: {n_pages} сторінок у папці {DIST.name}/ ({len(PRODUCTS)} товарів, {len(VISIBLE_CATS)} категорій).")

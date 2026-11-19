@@ -2,15 +2,15 @@
 @font-face { font-family: "Manrope"; font-style: normal; font-weight: 400 800; font-display: swap; src: url("../fonts/manrope-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 
 :root {
-  /* Світлий фон, темно-синій/графітовий основний, глибокий бірюзовий акцент.
+  /* Світлий фон, темно-синій/графітовий основний, насичений синій акцент.
      --accent проходить 4,5:1 на білому (≈5,1:1) і під білим текстом кнопок; --accent-bright — лише декор. */
   --navy: #0b2e4f;
   --navy-2: #1a3352;
   --graphite: #232c38;
-  --accent: #0b7a7c;
-  --accent-dark: #075f61;
-  --accent-bright: #13a6a8;
-  --accent-soft: #e2f3f3;
+  --accent: #1560d4;
+  --accent-dark: #0f49a8;
+  --accent-bright: #3b8bff;
+  --accent-soft: #e6effc;
   --ink: #18212d;
   --muted: #566372;
   --line: #e3e8ee;
@@ -237,7 +237,7 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); ou
 .spotlight { display: grid; grid-template-columns: 1fr 1fr; background: #fff; border: 1px solid var(--line); border-left: 6px solid var(--accent); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
 .spotlight__img { background: radial-gradient(circle at 50% 45%, #fff 0%, #e6eef3 70%); display: grid; place-items: center; padding: 40px 20px; min-height: 360px; }
 .machine--sm { transform: scale(.85); }
-.spotlight__text { padding: 44px 40px; background: repeating-radial-gradient(circle at 100% 0, transparent 0 14px, rgba(11,122,124,.04) 14px 15px); }
+.spotlight__text { padding: 44px 40px; background: repeating-radial-gradient(circle at 100% 0, transparent 0 14px, rgba(21,96,212,.04) 14px 15px); }
 .spotlight__text h2 { text-transform: none; color: var(--navy); }
 .ticks { list-style: none; padding: 0; margin: 0 0 8px; display: grid; gap: 8px; }
 .ticks li { padding-left: 28px; position: relative; }
@@ -248,9 +248,9 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); ou
 .post { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: #fff; transition: .2s; }
 .post:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
 .post__img { aspect-ratio: 16/9; }
-.post__img--1 { background: linear-gradient(135deg, #0b7a7c, #1a3352); }
+.post__img--1 { background: linear-gradient(135deg, #1560d4, #1a3352); }
 .post__img--2 { background: linear-gradient(135deg, #1a3352, #7adbd9); }
-.post__img--3 { background: linear-gradient(135deg, #0e2440, #0b7a7c 70%, #e2f3f3); }
+.post__img--3 { background: linear-gradient(135deg, #0e2440, #1560d4 70%, #e6effc); }
 .post__body { padding: 20px; }
 .post__meta { font-size: .78rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
 .post h3 { margin: 8px 0 14px; }
@@ -397,7 +397,7 @@ a.card__cat { text-decoration: none; }
 h1 { color: var(--navy); }
 .ico { flex: none; }
 .btn { gap: 10px; }
-.btn--primary { background: var(--accent); box-shadow: 0 8px 20px rgba(11, 122, 124, .22); }
+.btn--primary { background: var(--accent); box-shadow: 0 8px 20px rgba(21, 96, 212, .22); }
 .btn--outline { background: #fff; border-color: #bcd6d6; color: var(--navy); }
 .btn--outline:hover { border-color: var(--accent); background: var(--accent-soft); color: var(--navy); }
 .btn--outline .ico { color: var(--accent); }
@@ -505,7 +505,7 @@ h1 { color: var(--navy); }
 @media (max-width: 860px) { .calc, .about, .contacts, .faq, .pd { grid-template-columns: 1fr; } }
 .section--dark h2, .section--dark h3, .calc__result h2 { color: #fff; }
 html { scroll-padding-top: 100px; }
-.chat__btn { box-shadow: 0 10px 30px rgba(11, 122, 124, .4); }
+.chat__btn { box-shadow: 0 10px 30px rgba(21, 96, 212, .4); }
 a.chip { text-decoration: none; }
 .cons-group { margin-bottom: 56px; scroll-margin-top: 100px; }
 .cons-group__head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
