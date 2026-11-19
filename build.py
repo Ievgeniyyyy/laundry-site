@@ -72,11 +72,13 @@ ICONS = {
     "chem": '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 5h12M20 5v10l-9 19a5 5 0 0 0 4.5 7h17a5 5 0 0 0 4.5-7l-9-19V5"/><path d="M14 30h20"/><circle cx="21" cy="35" r="1.5" fill="currentColor"/><circle cx="27" cy="34" r="1" fill="currentColor"/></svg>',
     "box": '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 15 24 6l18 9v18l-18 9-18-9V15Z"/><path d="m6 15 18 9 18-9M24 24v18"/></svg>',
 }
-LOGO_SVG = ('<svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true">'
-            '<path d="M24 4C24 4 12 18 12 27a12 12 0 0 0 24 0C36 18 24 4 24 4Z" fill="#1560d4"/>'
-            '<path d="M18 26c1.5 4 4.5 6 8.5 6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".85"/>'
-            '<path d="M3 36c6-4 11-4 17 0s12 4 18 0 6-3 7-3" fill="none" stroke="#0e2440" stroke-width="3.4" stroke-linecap="round"/>'
-            '<path d="M7 42c5-3 9-3 14 0s10 3 15 0" fill="none" stroke="#3b8bff" stroke-width="3" stroke-linecap="round"/></svg>')
+# Знак MLT, напрям «Під ключ»: два кути на сітці 56×56 (вихідні файли — Gaben/mlt-brand/logo/).
+LOGO_SVG = ('<svg viewBox="0 0 56 56" width="40" height="40" aria-hidden="true">'
+            '<path d="M2 2H54V30H46V10H10V54H2Z" fill="#0b2e4f"/><path d="M54 30V54H10V46H46V30Z" fill="#1560d4"/></svg>')
+LOGO_SVG_LIGHT = ('<svg viewBox="0 0 56 56" width="40" height="40" aria-hidden="true">'
+                  '<path d="M2 2H54V30H46V10H10V54H2Z" fill="#ffffff"/><path d="M54 30V54H10V46H46V30Z" fill="#3b8bff"/></svg>')
+FAVICON_SVG = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 64 64"><rect x="-4" y="-4" width="64" height="64" rx="12" fill="#ffffff"/>'
+               '<path d="M2 2H54V30H46V10H10V54H2Z" fill="#0b2e4f"/><path d="M54 30V54H10V46H46V30Z" fill="#1560d4"/></svg>\n')
 ARROW = '<svg class="ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h13m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 ICON_CALC = '<svg class="ico" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="6" width="8" height="3" rx=".8" fill="currentColor"/><g fill="currentColor"><circle cx="9" cy="13" r="1.1"/><circle cx="12" cy="13" r="1.1"/><circle cx="15" cy="13" r="1.1"/><circle cx="9" cy="17" r="1.1"/><circle cx="12" cy="17" r="1.1"/><circle cx="15" cy="17" r="1.1"/></g></svg>'
 ICON_CHAT = '<svg class="ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>'
@@ -185,7 +187,7 @@ HP = '<div class="hp" aria-hidden="true"><label>Не заповнюйте це �
 # ---------- каркас сторінки
 def layout(title, desc, path, body, schemas=(), og_img=None, preload=None):
     logo_a, logo_b = (S["logoParts"] + ["", ""])[:2] if S["logoParts"] else ("", "")
-    logo_text = f"<b>{e(logo_a)}</b> {e(logo_b)}" if (logo_a or logo_b) else e(BRAND)
+    logo_text = f"<b>{e(logo_a)}</b><small>{e(logo_b)}</small>" if (logo_a or logo_b) else e(BRAND)
     nav = [("Каталог", "/#catalog")]
     if CONS_CATS:
         nav.append(("Витратні матеріали", CONS_URL))
@@ -296,7 +298,7 @@ def layout(title, desc, path, body, schemas=(), og_img=None, preload=None):
 {strip}
 <footer class="footer">
   <div class="container footer__inner">
-    <div><a href="/" class="logo logo--light"><span>{logo_text}</span></a>
+    <div><a href="/" class="logo logo--light">{LOGO_SVG_LIGHT}<span>{logo_text}</span></a>
       <p>© {year} {e(BRAND)}. Професійне пральне обладнання та витратні матеріали.</p></div>
     <nav class="footer__nav" aria-label="Меню у підвалі">{"".join(f'<a href="{c["url"]}">{e(c["name"])}</a>' for c in VISIBLE_CATS)}{f'<a href="{CONS_URL}">Витратні матеріали</a>' if CONS_CATS else ""}{'<a href="/slovnyk/">Словник термінів</a>' if S["glossary"] else ""}<a href="/polityka-konfidentsiinosti/">Політика конфіденційності</a></nav>
   </div>
@@ -703,9 +705,7 @@ def service_files():
         lines += ["", "## Контакти", *[f"- {x}" for x in contact]]
     write("/llms.txt", "\n".join(lines) + "\n")
 
-    fav = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M24 3C24 3 11 18 11 28a13 13 0 0 0 26 0C37 18 24 3 24 3Z" fill="#1560d4"/>'
-           '<path d="M17 28c1.5 4.5 5 7 9.5 7" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>')
-    write("/favicon.svg", fav)
+    write("/favicon.svg", FAVICON_SVG)
     (DIST / ".nojekyll").write_text("")
 
 

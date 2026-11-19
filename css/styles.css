@@ -587,3 +587,12 @@ h2 { font-size: clamp(1.9rem, 3.4vw, 2.8rem); }
   .flow__list li::after { display: none; }
   .gloss__row { grid-template-columns: 1fr; }
 }
+
+/* Логотип MLT: знак + «MLT» + дрібний дескриптор */
+.logo { gap: 11px; line-height: 1; }
+.logo span { max-width: none; }
+.logo b { font-size: 1.5rem; font-weight: 800; color: var(--navy); letter-spacing: .01em; line-height: 1; }
+.logo small { display: block; margin-top: 4px; max-width: 9.5em; font-size: .66rem; font-weight: 600; line-height: 1.2; color: var(--muted); letter-spacing: .01em; }
+.logo--light b, .footer .logo b { color: #fff; }
+.logo--light small, .footer .logo small { color: #a9c6f5; }
+@media (max-width: 860px) { .logo svg { width: 34px; height: 34px; } .logo b { font-size: 1.3rem; } }
